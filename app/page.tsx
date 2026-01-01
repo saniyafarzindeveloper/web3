@@ -1,9 +1,35 @@
-import React from 'react'
+import DataTable from "@/components/DataTable";
+import Image from "next/image";
 
 const Page = () => {
   return (
-    <p>Page</p>
-  )
-}
+    <main className="main-container">
+      <section className="home-grid">
+        <div id="coin-overview">
+          <div className="header pt-2">
+            <Image
+              src="https://assets.coingecko.com/coins/images/1/large/bitcoin.png"
+              alt="bitcoin"
+              width={56}
+              height={56}
+            />
+            <div className="info">
+            <p>Bitcoin / BTC</p>
+            <h1>$89,113.0</h1>
+          </div>
+          </div>
+          
+        </div>
 
-export default Page
+        <p>Trending Coins</p>
+        <DataTable columns={[]} />
+      </section>
+
+      <section className="w-full mt-7 space-y-4">
+        <p>Categories</p>
+      </section>
+    </main>
+  );
+};
+
+export default Page;
