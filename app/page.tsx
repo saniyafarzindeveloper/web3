@@ -1,5 +1,37 @@
 import DataTable from "@/components/DataTable";
 import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+const columns : DataTableColumn<TrendingCoin>[] = [
+  {header: "Title",
+    cellClassName: 'name-cell',
+    cell: (coin) => {
+      const item = coin.item;
+      return(
+        <Link href={`/coins/${item.id}`}>
+        <Image src={item.large} alt={item.name} width={36} height={36} />
+        <p>{item.name}</p>
+        </Link>
+      )
+    }
+  },
+  {
+    header: "24h change",
+    cellClassName: 'name-cell',
+    cell: (coin) => {
+        const item = coin.item;
+        const isTrendingUp = item.data.price_change_percentage_24h.usd > 0;
+        return (
+          <div className={cn('price-change', isTrendingUp ? 'text-green-500' : 'text-red-500')}>
+              <p>
+                {item.name}
+              </p>
+          </div>
+        )
+    }
+  }
+]
 
 const Page = () => {
   return (
@@ -22,7 +54,7 @@ const Page = () => {
         </div>
 
         <p>Trending Coins</p>
-        <DataTable columns={[]} />
+        <DataTable columns={[{header: "Title"}, {header: "Price"}]} data={[]} />
       </section>
 
       <section className="w-full mt-7 space-y-4">
