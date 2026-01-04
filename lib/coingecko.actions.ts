@@ -1,6 +1,6 @@
 "use server"; //because its only being called from the server
 
-import { error } from "console";
+//abstraction of API endpoints
 import qs from "query-string";
 
 const BASE_URL = process.env.COINGECKO_BASE_URL;
@@ -25,4 +25,28 @@ export async function fetcher<T>(
       skipNull: true,
     }
   );
+
+  //calling the api end point
+  const response = await fetch(url, {
+    headers: {
+      "x-cg-demo-api-key": API_KEY,
+      "Content-type": "application/json",
+    } as Record<string, string>,
+    next: { revalidate },
+  });
+
+  if (!response.ok) {
+    const errorBody: CoinGeckoErrorBody = await response
+      .json()
+      .catch(() => ({}));
+
+    throw new Error(
+      `API error: ${response.status} : ${
+        errorBody.error || response.statusText
+      }`
+    );
+  }
+
+  //if response is okay
+  return response.json();
 }
