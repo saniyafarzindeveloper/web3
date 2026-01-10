@@ -82,6 +82,7 @@ export function convertOHLCData(data: OHLCData[]) {
 }
 
 export const ELLIPSIS = 'ellipsis' as const;
+
 export const buildPageNumbers = (
   currentPage: number,
   totalPages: number,
